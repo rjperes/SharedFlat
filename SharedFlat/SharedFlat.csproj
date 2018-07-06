@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Ricardo Peres</Authors>
+    <Company>Ricardo Peres</Company>
+    <Description>SharedFlat is a multitenancy library for .NET Core/.NET Standard.</Description>
+    <Copyright>Ricardo Peres 2018</Copyright>
+    <PackageProjectUrl>https://github.com/rjperes/SharedFlat</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>multitenancy,netcore,netstandard</PackageTags>
+    <PackageLicenseUrl>https://github.com/rjperes/SharedFlat/blob/master/lgpl.txt</PackageLicenseUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Product>SharedFlat</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>
