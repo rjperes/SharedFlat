@@ -14,7 +14,7 @@ namespace SharedFlat
             return identification._services.AddScoped<ITenantDbContext, DifferentSchemaTenantDbContext>();
         }
 
-        public static IServiceCollection FilterByTenant(this DbContextIdentification identification, string tenantColumn = "Tenant")
+        public static IServiceCollection FilterByTenant(this DbContextIdentification identification, string tenantColumn = nameof(TenantService.Tenant))
         {
             return identification._services.AddScoped<ITenantDbContext, FilterTenantDbContext>(sp => new FilterTenantDbContext(sp.GetRequiredService<ITenantService>(), tenantColumn));
         }

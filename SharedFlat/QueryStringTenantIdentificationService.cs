@@ -8,16 +8,16 @@ namespace SharedFlat
 {
     public sealed class QueryStringTenantIdentificationService : ITenantIdentificationService
     {
-        private readonly HostTenantSettings _tenants;
-        private readonly string _tenantKey = "Tenant";
+        private readonly TenantMapping _tenants;
+        private readonly string _tenantKey = nameof(TenantService.Tenant);
 
-        public QueryStringTenantIdentificationService(IConfiguration configuration, string tenantKey = "Tenant")
+        public QueryStringTenantIdentificationService(IConfiguration configuration, string tenantKey = nameof(TenantService.Tenant))
         {
-            this._tenants = configuration.GetHostTenantSettings();
+            this._tenants = configuration.GetTenantMapping();
             this._tenantKey = tenantKey ?? this._tenantKey;
         }
 
-        public string GetTenant(HttpContext context)
+        public string GetCurrentTenant(HttpContext context)
         {
             var tenant = context.Request.Query[this._tenantKey].ToString();
 
@@ -34,10 +34,9 @@ namespace SharedFlat
             return tenant;
         }
 
-        public IEnumerable<string> GetTenants()
+        public IEnumerable<string> GetAllTenants()
         {
             return this._tenants.Tenants.Values;
         }
     }
-
 }

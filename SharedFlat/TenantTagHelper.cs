@@ -20,8 +20,9 @@ namespace SharedFlat
         public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var tenants = this.Name?.Split(',') ?? Enumerable.Empty<string>();
+            var tenant = this._service.GetCurrentTenant();
 
-            if (!tenants.Any(tenant => this._service.GetCurrentTenant() == tenant))
+            if (!tenants.Any(t => t == tenant))
             {
                 output.SuppressOutput();
             }

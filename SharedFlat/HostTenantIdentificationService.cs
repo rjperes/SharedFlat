@@ -6,24 +6,24 @@ namespace SharedFlat
 {
     public sealed class HostTenantIdentificationService : ITenantIdentificationService
     {
-        private readonly HostTenantSettings _tenants;
+        private readonly TenantMapping _tenants;
 
         public HostTenantIdentificationService(IConfiguration configuration)
         {
-            this._tenants = configuration.GetHostTenantSettings();
+            this._tenants = configuration.GetTenantMapping();
         }
 
-        public HostTenantIdentificationService(HostTenantSettings tenants)
+        public HostTenantIdentificationService(TenantMapping tenants)
         {
             this._tenants = tenants;
         }
 
-        public IEnumerable<string> GetTenants()
+        public IEnumerable<string> GetAllTenants()
         {
             return this._tenants.Tenants.Values;
         }
 
-        public string GetTenant(HttpContext context)
+        public string GetCurrentTenant(HttpContext context)
         {
             if (!this._tenants.Tenants.TryGetValue(context.Request.Host.Host, out var tenant))
             {
@@ -33,5 +33,4 @@ namespace SharedFlat
             return tenant;
         }
     }
-
 }

@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@addTagHelper *, Multitenant
 
 <tenant name="abc">
     This is tenant ABC!
@@ -10,3 +9,10 @@
 <tenant name="xyz">
     This is tenant XYZ!
 </tenant>
+
+@if (this.IsEnabled("OptionA", false))
+{
+    <p>Option A is enabled</p>
+}
+
+<tenant-partial tenant-name="xyz" name="xyz_partial"></tenant-partial>

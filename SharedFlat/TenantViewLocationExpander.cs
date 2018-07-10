@@ -21,7 +21,7 @@ namespace SharedFlat
         public void PopulateValues(ViewLocationExpanderContext context)
         {
             this._service = context.ActionContext.HttpContext.RequestServices.GetService<ITenantService>();
-            this._tenant = context.Values["Tenant"] = this._service.GetCurrentTenant();
+            this._tenant = context.Values[nameof(TenantService.Tenant)] = this._service.GetCurrentTenant();
         }
     }
 

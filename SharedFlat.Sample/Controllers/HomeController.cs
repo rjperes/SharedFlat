@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SharedFlat.Sample.Models;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SharedFlat.Sample.Controllers
 {
@@ -16,6 +17,7 @@ namespace SharedFlat.Sample.Controllers
         public IActionResult Index([FromServices] BlogContext context)
         {
             //context.Blogs.ToList();
+
 
             return this.View();
         }

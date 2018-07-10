@@ -5,8 +5,8 @@ namespace SharedFlat
 {
     public interface ITenantIdentificationService
     {
-        string GetTenant(HttpContext context);
-        IEnumerable<string> GetTenants();
+        string GetCurrentTenant(HttpContext context);
+        IEnumerable<string> GetAllTenants();
     }
 
 }

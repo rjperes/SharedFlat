@@ -4,9 +4,11 @@ namespace SharedFlat
 {
     public static class ConfigurationExtensions
     {
-        public static HostTenantSettings GetHostTenantSettings(this IConfiguration configuration)
+        public static readonly string Tenants = nameof(Tenants);
+
+        public static TenantMapping GetTenantMapping(this IConfiguration configuration)
         {
-            return configuration.GetHostTenantSettings();
+            return configuration.GetSection(nameof(Tenants)).Get<TenantMapping>();
         }
     }
 }

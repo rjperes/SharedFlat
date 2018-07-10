@@ -13,5 +13,10 @@ namespace SharedFlat
         {
             return identification._services.AddScoped<ITenantIdentificationService, QueryStringTenantIdentificationService>();
         }
+
+        public static IServiceCollection TenantForSourceIP(this TenantIdentification identification)
+        {
+            return identification._services.AddScoped<ITenantIdentificationService, SourceIPTenantIdentificationService>();
+        }
     }
 }

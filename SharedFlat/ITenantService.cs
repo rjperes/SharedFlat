@@ -8,6 +8,6 @@ namespace SharedFlat
     public interface ITenantService : IInfrastructure<IServiceProvider>
     {
         string GetCurrentTenant();
-        IEnumerable<string> GetTenants();
+        IEnumerable<string> GetAllTenants();
     }
 }

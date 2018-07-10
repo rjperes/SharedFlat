@@ -5,3 +5,6 @@
 /.vs
 /SharedFlat/obj
 /SharedFlat.Sample/obj
+/SharedFlat/bin/Debug
+/SharedFlat.Sample/bin/Debug/netcoreapp2.1
+/SharedFlat.Sample/SharedFlat.Sample.csproj.user

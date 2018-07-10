@@ -1,4 +1,4 @@
-﻿namespace SharedFlat.Sample
+﻿namespace SharedFlat.Sample.Models
 {
     public enum State
     {

@@ -6,6 +6,8 @@ namespace SharedFlat
 {
     public sealed class TenantService : ITenantService
     {
+        public static readonly string Tenant = nameof(Tenant);
+
         private readonly HttpContext _httpContext;
         private readonly ITenantIdentificationService _service;
 
@@ -18,14 +20,14 @@ namespace SharedFlat
             this.Instance = this._httpContext.RequestServices;
         }
 
-        public IEnumerable<string> GetTenants()
+        public IEnumerable<string> GetAllTenants()
         {
-            return this._service.GetTenants();
+            return this._service.GetAllTenants();
         }
 
         public string GetCurrentTenant()
         {
-            return this._httpContext.Items["Tenant"] as string;
+            return this._httpContext.Items[nameof(Tenant)] as string;
         }
     }
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 
-namespace SharedFlat.Sample
+namespace SharedFlat.Sample.Models
 {
     public class BlogContext : DbContext, IDesignTimeDbContextFactory<DbContext>
     {

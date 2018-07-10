@@ -9,7 +9,7 @@ namespace SharedFlat
     public sealed class FilterTenantDbContext : ITenantDbContext
     {
         private readonly ITenantService _service;
-        private string _tenantColumn = "Tenant";
+        private string _tenantColumn = nameof(TenantService.Tenant);
 
         private static readonly MethodInfo _propertyMethod = typeof(EF).GetMethod(nameof(EF.Property), BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(typeof(string));
 
@@ -22,7 +22,7 @@ namespace SharedFlat
             return lambda;
         }
 
-        public FilterTenantDbContext(ITenantService service, string tenantColumn = "Tenant")
+        public FilterTenantDbContext(ITenantService service, string tenantColumn = nameof(TenantService.Tenant))
         {
             this._service = service;
             this._tenantColumn = tenantColumn ?? this._tenantColumn;

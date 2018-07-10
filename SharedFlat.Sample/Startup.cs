@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedFlat.Sample.Models;
+using System.Collections.Generic;
 
 namespace SharedFlat.Sample
 {
@@ -21,22 +22,23 @@ namespace SharedFlat.Sample
         {
             services
                 .AddTenantService()
+                .AddTenantLocations()
                 .AddTenantScriptAndStyle()
                 .AddTenantIdentification()
-                    .TenantForHost()
+                    .TenantForSourceIP()
+                    //.TenantForHost()
                 .AddTenantDbContextIdentitication()
                     .FilterByTenant();
 
+            services.AddTenantMiddleware();
+
             services.AddHttpContextAccessor();
+
+            services.AddDbContext<BlogContext>();
 
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.ViewLocationExpanders.Insert(0, new TenantViewLocationExpander());
-            });
 
             services.Configure<TenantSettings>("abc", options =>
             {
@@ -49,14 +51,12 @@ namespace SharedFlat.Sample
                 options.NumberOption = 2;
                 options.StringOption = "xyz";
             });
-
-            services.AddDbContext<BlogContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseTenants();
+            //app.UseTenants();
 
             if (env.IsDevelopment())
             {
