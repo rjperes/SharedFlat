@@ -19,7 +19,7 @@ namespace SharedFlat
             }
             else
             {
-                return configuration.GetValue<bool>(setting, defaultValue);
+                return configuration.GetSection(nameof(ConfigurationExtensions.Tenants)).GetValue<bool>(setting, defaultValue);
             }
         }
 

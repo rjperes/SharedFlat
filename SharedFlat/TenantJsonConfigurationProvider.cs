@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SharedFlat
 {

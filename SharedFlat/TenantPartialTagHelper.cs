@@ -17,12 +17,12 @@ namespace SharedFlat
             this._service = service;
         }
 
-        [HtmlAttributeName("tenant-name")]
-        public string TenantName { get; set; }
+        [HtmlAttributeName("tenant")]
+        public string Tenant { get; set; }
 
         public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var tenants = this.TenantName?.Split(',') ?? Enumerable.Empty<string>();
+            var tenants = this.Tenant?.Split(',') ?? Enumerable.Empty<string>();
             var tenant = this._service.GetCurrentTenant();
 
             if (tenants.Any(t => t == tenant))

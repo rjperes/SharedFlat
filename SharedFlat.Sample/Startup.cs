@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedFlat.Sample.Models;
-using System.Collections.Generic;
 
 namespace SharedFlat.Sample
 {
@@ -22,17 +21,16 @@ namespace SharedFlat.Sample
         {
             services
                 .AddTenantService()
+                .AddTenantMiddleware()
                 .AddTenantLocations()
                 .AddTenantScriptAndStyle()
                 .AddTenantIdentification()
-                    .TenantForSourceIP()
-                    //.TenantForHost()
+                    //.DynamicTenant(x => "abc", () => new [] { "abc", "xyz" })
+                    //.TenantForQueryString()
+                    //.TenantForSourceIP()
+                    .TenantForHost()
                 .AddTenantDbContextIdentitication()
                     .FilterByTenant();
-
-            services.AddTenantMiddleware();
-
-            services.AddHttpContextAccessor();
 
             services.AddDbContext<BlogContext>();
 

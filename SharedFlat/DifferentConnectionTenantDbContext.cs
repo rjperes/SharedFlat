@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 
 namespace SharedFlat
@@ -7,17 +6,18 @@ namespace SharedFlat
     public sealed class DifferentConnectionTenantDbContext : ITenantDbContext
     {
         private readonly ITenantService _service;
+        private readonly IConfiguration _configuration;
 
-        public DifferentConnectionTenantDbContext(ITenantService service)
+        public DifferentConnectionTenantDbContext(ITenantService service, IConfiguration configuration)
         {
             this._service = service;
+            this._configuration = configuration;
         }
 
         public void Apply(ModelBuilder modelBuilder, DbContext context)
         {
             var tenant = this._service.GetCurrentTenant();
-            var configuration = this._service.GetService<IConfiguration>();
-            var connectionString = configuration.GetConnectionString(tenant);
+            var connectionString = this._configuration.GetConnectionString(tenant);
 
             context.Database.GetDbConnection().ConnectionString = connectionString;
         }

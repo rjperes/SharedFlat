@@ -28,7 +28,9 @@ namespace SharedFlat
 
         public static IServiceCollection AddTenantService(this IServiceCollection services)
         {
-            return services.AddScoped<ITenantService, TenantService>();
+            return services
+                .AddHttpContextAccessor()
+                .AddScoped<ITenantService, TenantService>();
         }
 
         public static IServiceCollection AddQueryStringIdentificationService(this IServiceCollection services, string tenantKey = nameof(TenantService.Tenant))

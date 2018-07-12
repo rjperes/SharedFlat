@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SharedFlat
 {
 
-    public interface ITenantService : IInfrastructure<IServiceProvider>
+    public interface ITenantService
     {
         string GetCurrentTenant();
         IEnumerable<string> GetAllTenants();
