@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace SharedFlat
 {
@@ -19,11 +21,6 @@ namespace SharedFlat
             {
                 options.ViewLocationExpanders.Insert(0, new TenantViewLocationExpander());
             });
-        }
-
-        public static IServiceCollection AddTenantScriptAndStyle(this IServiceCollection services, bool injectScript = true, bool injectStylesheet = true, string rootPath = null)
-        {
-            return services.AddScoped<ITagHelperComponent, TenantTagHelperComponent>(sp => new TenantTagHelperComponent(sp.GetRequiredService<ITenantService>(), injectScript, injectStylesheet, rootPath));
         }
 
         public static IServiceCollection AddTenantService(this IServiceCollection services)

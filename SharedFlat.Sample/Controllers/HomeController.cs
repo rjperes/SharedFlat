@@ -8,7 +8,7 @@ namespace SharedFlat.Sample.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(IOptionsSnapshot<TenantSettings> settings, ITenantService service)
+        public HomeController(IOptionsSnapshot<PerTenantSettings> settings, ITenantService service)
         {
             var tenant = service.GetCurrentTenant();
             var options = settings.Get(tenant);

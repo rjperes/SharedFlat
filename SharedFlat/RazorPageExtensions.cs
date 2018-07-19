@@ -6,7 +6,7 @@ namespace SharedFlat
 {
     public static class RazorPageExtensions
     {
-        public static bool IsEnabled(this IRazorPage page, string setting, bool defaultValue)
+        public static bool IsEnabledForTenant(this IRazorPage page, string setting, bool defaultValue = false)
         {
             var service = page.ViewContext.HttpContext.RequestServices.GetService<ITenantService>();
             var tenant = service.GetCurrentTenant();
@@ -23,7 +23,7 @@ namespace SharedFlat
             }
         }
 
-        public static T GetValue<T>(this IRazorPage page, string setting)
+        public static T GetValueForTenant<T>(this IRazorPage page, string setting, T defaultValue = default(T))
         {
             var service = page.ViewContext.HttpContext.RequestServices.GetService<ITenantService>();
             var tenant = service.GetCurrentTenant();
@@ -32,11 +32,11 @@ namespace SharedFlat
 
             if (section.Exists())
             {
-                return section.GetValue<T>(setting);
+                return section.GetValue<T>(setting, defaultValue);
             }
             else
             {
-                return configuration.GetValue<T>(setting);
+                return configuration.GetValue<T>(setting, defaultValue);
             }
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SharedFlat.Sample.Models;
 
 namespace SharedFlat.Sample
@@ -23,7 +24,6 @@ namespace SharedFlat.Sample
                 .AddTenantService()
                 .AddTenantMiddleware()
                 .AddTenantLocations()
-                .AddTenantScriptAndStyle()
                 .AddTenantIdentification()
                     //.DynamicTenant(x => "abc", () => new [] { "abc", "xyz" })
                     //.TenantForQueryString()
@@ -38,13 +38,13 @@ namespace SharedFlat.Sample
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.Configure<TenantSettings>("abc", options =>
+            services.Configure<PerTenantSettings>("abc", options =>
             {
                 options.NumberOption = 1;
                 options.StringOption = "abc";
             });
 
-            services.Configure<TenantSettings>("xyz", options =>
+            services.Configure<PerTenantSettings>("xyz", options =>
             {
                 options.NumberOption = 2;
                 options.StringOption = "xyz";
@@ -52,13 +52,17 @@ namespace SharedFlat.Sample
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //app.UseTenants();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                loggerFactory
+                    .AddConsole()
+                    .AddDebug();
             }
             else
             {
@@ -75,5 +79,5 @@ namespace SharedFlat.Sample
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-    }
+    }  
 }

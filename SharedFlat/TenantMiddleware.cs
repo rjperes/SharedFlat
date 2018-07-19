@@ -34,7 +34,7 @@ namespace SharedFlat
                     provider.Source.Path = $"appsettings.{tenant}.{environment.EnvironmentName}.json";
                 }*/
 
-                context.Items[nameof(TenantService.Tenant)] = tenant;
+                //context.Items[nameof(TenantService.Tenant)] = tenant;
             }
 
             return this._next(context);

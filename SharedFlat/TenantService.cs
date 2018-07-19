@@ -23,7 +23,7 @@ namespace SharedFlat
 
         public string GetCurrentTenant()
         {
-            return this._httpContext.Items[nameof(Tenant)] as string;
+            return this._service.GetCurrentTenant(this._httpContext);
         }
     }
 
