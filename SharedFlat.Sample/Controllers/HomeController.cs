@@ -16,8 +16,7 @@ namespace SharedFlat.Sample.Controllers
 
         public IActionResult Index([FromServices] BlogContext context)
         {
-            //context.Blogs.ToList();
-
+            context.Blogs.ToList();
 
             return this.View();
         }

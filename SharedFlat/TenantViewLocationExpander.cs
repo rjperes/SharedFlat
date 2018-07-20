@@ -6,6 +6,8 @@ namespace SharedFlat
 {
     public sealed class TenantViewLocationExpander : IViewLocationExpander
     {
+        internal static readonly IViewLocationExpander Instance = new TenantViewLocationExpander();
+
         private ITenantService _service;
         private string _tenant;
 

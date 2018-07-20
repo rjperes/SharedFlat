@@ -1,15 +1,56 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Reflection;
 
 namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddTenantServiceProviderConfiguration(this IServiceCollection services, Assembly assembly)
+        {
+            var types = assembly
+                .GetExportedTypes()
+                .Where(type => typeof(ITenantConfiguration).IsAssignableFrom(type))
+                .Where(type => (type.IsAbstract == false) && (type.IsInterface == false));
+
+            services.AddScoped(typeof(ITenantConfiguration), sp =>
+            {
+                var svc = sp.GetRequiredService<ITenantService>();
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var tenant = svc.GetCurrentTenant();
+                var instance = types
+                    .Select(type => ActivatorUtilities.CreateInstance(sp, type))
+                    .OfType<ITenantConfiguration>()
+                    .SingleOrDefault(x => x.Tenant == tenant);
+
+                if (instance != null)
+                {
+                    instance.Configure(configuration);
+                    instance.ConfigureServices(services);
+
+                    sp.GetRequiredService<IHttpContextAccessor>().HttpContext.RequestServices = services.BuildServiceProvider();
+                    return instance;
+                }
+                else
+                {
+                    return DummyTenantServiceProviderConfiguration.Instance;
+                }
+
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddTenantServiceProviderConfiguration<T>(this IServiceCollection services)
+        {
+            var assembly = typeof(T).Assembly;
+            return services.AddTenantServiceProviderConfiguration(assembly);
+        }
+
         public static TenantIdentification AddTenantIdentification(this IServiceCollection services)
         {
             return new TenantIdentification(services);
@@ -19,7 +60,10 @@ namespace SharedFlat
         {
             return services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.ViewLocationExpanders.Insert(0, new TenantViewLocationExpander());
+                if (!(options.ViewLocationExpanders.FirstOrDefault() is TenantViewLocationExpander))
+                {
+                    options.ViewLocationExpanders.Insert(0, TenantViewLocationExpander.Instance);
+                }
             });
         }
 

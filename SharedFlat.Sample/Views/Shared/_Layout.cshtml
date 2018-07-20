@@ -1,11 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@inject Xpto Xpto
+@inject IConfiguration Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SharedFlat</title>
+    <title>@ViewBag.Title - SharedFlat</title>
 </head>
 <body>
+    <h1>Name: @Xpto.Name</h1>
+    <h2>Configuration: @Configuration["Tenant"]</h2>
     @RenderBody()
 </body>
 </html>

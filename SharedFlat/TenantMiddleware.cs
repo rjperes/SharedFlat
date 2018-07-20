@@ -17,8 +17,9 @@ namespace SharedFlat
         {
             if (context.Items.ContainsKey(nameof(TenantService.Tenant)) == false)
             {
-                var service = context.RequestServices.GetService<ITenantIdentificationService>();
-                var tenant = service.GetCurrentTenant(context);
+                var configuration = context.RequestServices.GetServices<ITenantConfiguration>();
+                //var service = context.RequestServices.GetService<ITenantIdentificationService>();
+                //var tenant = service.GetCurrentTenant(context);
                 /*var configuration = context.RequestServices.GetService<IConfiguration>();
                 var environment = context.RequestServices.GetService<IHostingEnvironment>();
 

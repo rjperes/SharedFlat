@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SharedFlat.Sample.Models;
+using System;
 
 namespace SharedFlat.Sample
 {
@@ -30,9 +32,16 @@ namespace SharedFlat.Sample
                     //.TenantForSourceIP()
                     .TenantForHost()
                 .AddTenantDbContextIdentitication()
-                    .FilterByTenant();
+                    .Dummy();
+                    //.FilterByTenant();
 
-            services.AddDbContext<BlogContext>();
+            services.AddTenantServiceProviderConfiguration<Startup>();
+
+            services.AddDbContext<BlogContext>(options =>
+            {
+                options
+                    .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services
                 .AddMvc()
@@ -52,8 +61,10 @@ namespace SharedFlat.Sample
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
+            var xpto = serviceProvider.GetService<Xpto>();
+
             //app.UseTenants();
 
             if (env.IsDevelopment())
