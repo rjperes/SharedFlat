@@ -12,7 +12,7 @@ namespace SharedFlat
             this._service = service;
         }
 
-        public void Apply(ModelBuilder modelBuilder, DbContext context)
+        public void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {
             var tenant = this._service.GetCurrentTenant();
 
@@ -21,6 +21,9 @@ namespace SharedFlat
                 entity.Relational().Schema = tenant;
             }
         }
-    }
 
+        public void SaveChanges(DbContext context)
+        {
+        }
+    }
 }

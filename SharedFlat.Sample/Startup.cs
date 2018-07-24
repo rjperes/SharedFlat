@@ -32,10 +32,10 @@ namespace SharedFlat.Sample
                     //.TenantForSourceIP()
                     .TenantForHost()
                 .AddTenantDbContextIdentitication()
-                    .Dummy();
-                    //.FilterByTenant();
+                    //.Dummy();
+                    .FilterByTenant();
 
-            services.AddTenantServiceProviderConfiguration<Startup>();
+            services.AddTenantConfiguration<Startup>();
 
             services.AddDbContext<BlogContext>(options =>
             {

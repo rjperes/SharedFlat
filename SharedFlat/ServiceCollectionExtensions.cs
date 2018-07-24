@@ -10,7 +10,7 @@ namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddTenantServiceProviderConfiguration(this IServiceCollection services, Assembly assembly)
+        public static IServiceCollection AddTenantConfiguration(this IServiceCollection services, Assembly assembly)
         {
             var types = assembly
                 .GetExportedTypes()
@@ -45,10 +45,10 @@ namespace SharedFlat
             return services;
         }
 
-        public static IServiceCollection AddTenantServiceProviderConfiguration<T>(this IServiceCollection services)
+        public static IServiceCollection AddTenantConfiguration<T>(this IServiceCollection services)
         {
             var assembly = typeof(T).Assembly;
-            return services.AddTenantServiceProviderConfiguration(assembly);
+            return services.AddTenantConfiguration(assembly);
         }
 
         public static TenantIdentification AddTenantIdentification(this IServiceCollection services)

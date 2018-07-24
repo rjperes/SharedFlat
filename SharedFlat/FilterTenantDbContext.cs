@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -28,7 +29,7 @@ namespace SharedFlat
             this._tenantColumn = tenantColumn ?? this._tenantColumn;
         }
 
-        public void Apply(ModelBuilder modelBuilder, DbContext context)
+        public void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {
             var tenant = this._service.GetCurrentTenant();
 
@@ -41,6 +42,16 @@ namespace SharedFlat
                     .HasQueryFilter(this.IsTenantRestriction(entity.ClrType, tenant));
             }
         }
-    }
 
+        public void SaveChanges(DbContext context)
+        {
+            var svc = context.GetService<ITenantService>();
+            var tenant = svc.GetCurrentTenant();
+
+            foreach (var entity in context.ChangeTracker.Entries<ITenantEntity>().Where(e => e.State == EntityState.Added))
+            {
+                entity.Property(nameof(TenantService.Tenant)).CurrentValue = tenant;
+            }
+        }
+    }
 }

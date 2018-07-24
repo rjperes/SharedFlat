@@ -4,7 +4,7 @@ namespace SharedFlat
 {
     public interface ITenantDbContext
     {
-        void Apply(ModelBuilder modelBuilder, DbContext context);
+        void OnModelCreating(ModelBuilder modelBuilder, DbContext context);
+        void SaveChanges(DbContext tenantDbContext);
     }
-
 }

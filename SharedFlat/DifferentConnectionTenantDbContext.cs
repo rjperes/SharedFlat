@@ -14,12 +14,16 @@ namespace SharedFlat
             this._configuration = configuration;
         }
 
-        public void Apply(ModelBuilder modelBuilder, DbContext context)
+        public void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {
             var tenant = this._service.GetCurrentTenant();
             var connectionString = this._configuration.GetConnectionString(tenant);
 
             context.Database.GetDbConnection().ConnectionString = connectionString;
+        }
+
+        public void SaveChanges(DbContext context)
+        {
         }
     }
 }

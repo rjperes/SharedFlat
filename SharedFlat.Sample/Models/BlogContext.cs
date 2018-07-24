@@ -1,28 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace SharedFlat.Sample.Models
 {
-    public class BlogContext : DbContext, IDesignTimeDbContextFactory<DbContext>
+    public class BlogContext : TenantDbContext, IDesignTimeDbContextFactory<DbContext>
     {
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         {
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            var svc = this.GetService<ITenantDbContext>();
-            svc?.Apply(modelBuilder, this);
-
-            base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
         }
 
         public DbContext CreateDbContext(string[] args)

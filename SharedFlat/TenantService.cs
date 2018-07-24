@@ -16,10 +16,10 @@ namespace SharedFlat
             this._service = service;
         }
 
-        public IEnumerable<string> GetAllTenants()
+        /*public IEnumerable<string> GetAllTenants()
         {
             return this._service.GetAllTenants();
-        }
+        }*/
 
         public string GetCurrentTenant()
         {

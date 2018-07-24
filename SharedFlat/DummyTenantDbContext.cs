@@ -11,7 +11,11 @@ namespace SharedFlat
 
         }
 
-        public void Apply(ModelBuilder modelBuilder, DbContext context)
+        public void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
+        {
+        }
+
+        public void SaveChanges(DbContext context)
         {
         }
     }
