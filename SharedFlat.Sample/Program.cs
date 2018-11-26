@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 namespace SharedFlat.Sample
 {
     public static class Program
-    {        
+    {
         public static void Main(string[] args) =>
             CreateWebHostBuilder(args)
                 .Build()

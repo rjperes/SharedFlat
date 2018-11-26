@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFlat", "SharedFlat\SharedFlat.csproj", "{203F7360-5EE4-4F99-91D8-BB7AD8B2CF5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFlat", "SharedFlat\SharedFlat.csproj", "{203F7360-5EE4-4F99-91D8-BB7AD8B2CF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFlat.Sample", "SharedFlat.Sample\SharedFlat.Sample.csproj", "{6A8B4695-382F-427E-B7CE-B1E1438FBB6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFlat.Sample", "SharedFlat.Sample\SharedFlat.Sample.csproj", "{6A8B4695-382F-427E-B7CE-B1E1438FBB6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6598DA57-8F51-4F88-B93E-D873FDE377F9}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		lgpl.txt = lgpl.txt
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFlat.Sample.Abc", "SharedFlat.Sample.Abc\SharedFlat.Sample.Abc.csproj", "{B7412100-CE5D-4C28-8F81-CC0E609F1739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{6A8B4695-382F-427E-B7CE-B1E1438FBB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A8B4695-382F-427E-B7CE-B1E1438FBB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A8B4695-382F-427E-B7CE-B1E1438FBB6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7412100-CE5D-4C28-8F81-CC0E609F1739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7412100-CE5D-4C28-8F81-CC0E609F1739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7412100-CE5D-4C28-8F81-CC0E609F1739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7412100-CE5D-4C28-8F81-CC0E609F1739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

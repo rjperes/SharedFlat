@@ -3,13 +3,60 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Composition.Convention;
+using System.Composition.Hosting;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 
 namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
     {
+        private static ContainerConfiguration AddFromPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            var assemblyFiles = Directory
+                .GetFiles(path, "*.dll", searchOption);
+
+            var assemblies = assemblyFiles
+                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath);
+
+            var configuration = new ContainerConfiguration()
+                .WithAssemblies(assemblies, conventions);
+
+            return configuration;
+        }
+
+        public static IServiceCollection AddDynamicTenants(this IServiceCollection services, string path = null)
+        {
+            var conventions = new ConventionBuilder();
+            var builder = conventions
+                .ForTypesDerivedFrom<ITenantLoader>()
+                .Export<ITenantLoader>();
+
+            path = path ?? AppContext.BaseDirectory;
+
+            var configuration = AddFromPath(path, conventions);
+
+            using (var container = configuration.CreateContainer())
+            {
+                var svcs = container.GetExports<ITenantLoader>();
+
+                foreach (var svc in svcs)
+                {
+                    svc.Register(services);
+
+                    services.AddScoped<ITenantLoader>(sp => svc);
+
+                    services.AddScoped<ITenantConfiguration>(sp => svc.GetTenantConfiguration());
+                }
+            }
+
+            return services;
+        }
+
         public static IServiceCollection AddTenantConfiguration(this IServiceCollection services, Assembly assembly)
         {
             var types = assembly

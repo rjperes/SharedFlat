@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,13 +59,23 @@ namespace SharedFlat.Sample
                 options.NumberOption = 2;
                 options.StringOption = "xyz";
             });
+
+            services.ConfigureOptions<PreConfigurePerTenantSettings>();
+            services.ConfigureOptions<PostConfigurePerTenantSettings>();
+            services.PostConfigure<PerTenantSettings>(options =>
+            {
+            });
+            services.PostConfigureAll<PerTenantSettings>(options =>
+            {
+            });
+            services.PostConfigureAll<PerTenantSettings>(options =>
+            {
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
-            var xpto = serviceProvider.GetService<Xpto>();
-
             //app.UseTenants();
 
             if (env.IsDevelopment())
@@ -90,5 +101,5 @@ namespace SharedFlat.Sample
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-    }  
+    }
 }

@@ -8,3 +8,5 @@
 /SharedFlat/bin/Debug
 /SharedFlat.Sample/bin/Debug/netcoreapp2.1
 /SharedFlat.Sample/SharedFlat.Sample.csproj.user
+/SharedFlat.Sample.Abc/obj
+/SharedFlat.Sample.Abc/bin/Debug/netcoreapp2.1
