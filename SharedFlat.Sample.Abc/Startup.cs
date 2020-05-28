@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using System;
 
 [assembly: HostingStartup(typeof(SharedFlat.Sample.Abc.Startup))]
 

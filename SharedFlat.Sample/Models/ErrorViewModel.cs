@@ -1,5 +1,3 @@
-using System;
-
 namespace SharedFlat.Sample.Models
 {
     public class ErrorViewModel

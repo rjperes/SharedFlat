@@ -18,7 +18,7 @@ namespace SharedFlat
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes().Where(x => typeof(ITenantEntity).IsAssignableFrom(x.ClrType)))
             {
-                entity.Relational().Schema = tenant;
+                entity.SetSchema(tenant);
             }
         }
 

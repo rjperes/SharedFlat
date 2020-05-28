@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SharedFlat
+﻿namespace SharedFlat
 {
 
     public interface ITenantService
