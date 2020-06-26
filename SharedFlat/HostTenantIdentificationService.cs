@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SharedFlat
 {
-    public sealed class HostTenantIdentificationService : ITenantIdentificationService
+    public sealed class HostTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
         private readonly TenantMapping _tenants;
 

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 
 namespace SharedFlat
 {
-    public sealed class TenantService : ITenantService
+    internal sealed class TenantService : ITenantService, ITenantsEnumerationService
     {
         public static readonly string Tenant = nameof(Tenant);
 
@@ -15,10 +17,10 @@ namespace SharedFlat
             this._service = service;
         }
 
-        /*public IEnumerable<string> GetAllTenants()
+        public IEnumerable<string> GetAllTenants()
         {
-            return this._service.GetAllTenants();
-        }*/
+            return (this._service as ITenantsEnumerationService)?.GetAllTenants() ?? throw new InvalidOperationException("Current tenant service does not allow enumerating tenants.");
+        }
 
         public string GetCurrentTenant()
         {

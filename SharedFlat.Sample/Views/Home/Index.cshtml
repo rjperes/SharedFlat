@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@model IEnumerable<Blog>
+
 <tenant name="abc">
     This is tenant ABC!
 </tenant>
@@ -16,3 +18,10 @@
 }
 
 <tenant-partial tenant="xyz" name="xyz_partial"></tenant-partial>
+
+<ul>
+@foreach (var blog in Model)
+{
+    <li>@blog.Name</li>
+}
+</ul>

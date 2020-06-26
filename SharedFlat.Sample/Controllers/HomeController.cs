@@ -16,9 +16,9 @@ namespace SharedFlat.Sample.Controllers
 
         public IActionResult Index([FromServices] BlogContext context)
         {
-            context.Blogs.ToList();
+            var blogs = context.Blogs.ToList();
 
-            return this.View();
+            return this.View(blogs);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

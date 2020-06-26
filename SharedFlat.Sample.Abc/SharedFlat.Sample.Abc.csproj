@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="ECHO Copying $(OutDir)\$(ProjectName).dll&#xD;&#xA;ECHO To ..\SharedFlat.Sample\$(OutDir)&#xD;&#xA;COPY $(OutDir)\$(ProjectName).dll ..\SharedFlat.Sample\$(OutDir)" />
+    <Exec Command="ECHO Copying $(OutDir)\$(ProjectName).dll&#xD;&#xA;ECHO To $(SolutionDir)\SharedFlat.Sample\$(OutDir)&#xD;&#xA;COPY $(OutDir)\$(ProjectName).dll $(SolutionDir)\SharedFlat.Sample\$(OutDir)" />
   </Target>
 
 </Project>

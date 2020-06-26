@@ -2,13 +2,13 @@
 
 namespace SharedFlat
 {
-    public sealed class TenantIdentification
+    internal sealed class TenantIdentification : ITenantIdentification
     {
-        internal readonly IServiceCollection _services;
+        public IServiceCollection Services { get; }
 
         internal TenantIdentification(IServiceCollection services)
         {
-            this._services = services;
+            this.Services = services;
         }
     }
 }

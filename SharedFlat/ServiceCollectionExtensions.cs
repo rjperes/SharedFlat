@@ -14,7 +14,7 @@ using System.Runtime.Loader;
 namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
-    {
+    {        
         private static ContainerConfiguration AddFromPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             var assemblyFiles = Directory
@@ -98,7 +98,7 @@ namespace SharedFlat
             return services.AddTenantConfiguration(assembly);
         }
 
-        public static TenantIdentification AddTenantIdentification(this IServiceCollection services)
+        public static ITenantIdentification AddTenantIdentification(this IServiceCollection services)
         {
             return new TenantIdentification(services);
 ;        }
@@ -118,6 +118,7 @@ namespace SharedFlat
         {
             return services
                 .AddHttpContextAccessor()
+                .AddScoped<ITenantsEnumerationService>(sp => sp.GetRequiredService<ITenantService>() as ITenantsEnumerationService)
                 .AddScoped<ITenantService, TenantService>();
         }
 
@@ -139,6 +140,11 @@ namespace SharedFlat
         public static IServiceCollection AddTenantMiddleware(this IServiceCollection services)
         {
             return services.AddSingleton<IStartupFilter, TenantStartupFilter>();
+        }
+
+        public static IServiceCollection ConfigureTenant<T>(this IServiceCollection services, string tenant, Action<T> configureOptions) where T : class, ITenantOptions
+        {
+            return services.Configure(tenant, configureOptions);
         }
     }
 }

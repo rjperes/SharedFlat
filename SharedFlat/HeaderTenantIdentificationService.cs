@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace SharedFlat
 {
-    public sealed class QueryStringTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
+    public sealed class HeaderTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
         private readonly TenantMapping _tenants;
         private readonly string _tenantKey = nameof(TenantService.Tenant);
 
-        public QueryStringTenantIdentificationService(IConfiguration configuration, string tenantKey = nameof(TenantService.Tenant))
+        public HeaderTenantIdentificationService(IConfiguration configuration, string tenantKey = nameof(TenantService.Tenant))
         {
             this._tenants = configuration.GetTenantMapping();
             this._tenantKey = tenantKey ?? this._tenantKey;
@@ -19,7 +19,7 @@ namespace SharedFlat
 
         public string GetCurrentTenant(HttpContext context)
         {
-            var tenant = context.Request.Query[this._tenantKey].ToString();
+            var tenant = context.Request.Headers[this._tenantKey].ToString();
 
             if (string.IsNullOrWhiteSpace(tenant) || !this._tenants.Tenants.Values.Contains(tenant, StringComparer.InvariantCultureIgnoreCase))
             {

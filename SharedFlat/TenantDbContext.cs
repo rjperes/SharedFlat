@@ -1,12 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace SharedFlat
 {
     public abstract class TenantDbContext : DbContext
     {
-        protected TenantDbContext(DbContextOptions options) : base(options)
+        protected HttpContext HttpContext { get; }
+
+        protected TenantDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor = default) : base(options)
         {
+            this.HttpContext = httpContextAccessor?.HttpContext;
         }
 
         private TenantDbContext()

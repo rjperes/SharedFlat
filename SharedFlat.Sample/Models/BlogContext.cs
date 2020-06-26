@@ -1,21 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace SharedFlat.Sample.Models
 {
     public class BlogContext : TenantDbContext, IDesignTimeDbContextFactory<DbContext>
     {
-        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        public BlogContext(DbContextOptions<BlogContext> options, IHttpContextAccessor httpContextAccessor) : base(options, httpContextAccessor)
         {
         }
 
         public DbContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<BlogContext>()
-                .UseSqlServer(@"Data Source=.\SQLEXPRESS; Integrated Security=SSPI; Initial Catalog=Test;")
+                .UseInMemoryDatabase("Blog")
+                //.UseSqlServer(@"Data Source=.\SQLEXPRESS; Integrated Security=SSPI; Initial Catalog=Test;")
                 .Options;
 
-            return new BlogContext(options);
+            return new BlogContext(options, new HttpContextAccessor { HttpContext = this.HttpContext });
         }
 
         public DbSet<Blog> Blogs { get; private set; }

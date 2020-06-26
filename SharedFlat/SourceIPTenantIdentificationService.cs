@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SharedFlat
 {
-    public sealed class SourceIPTenantIdentificationService : ITenantIdentificationService
+    public sealed class SourceIPTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
         private readonly TenantMapping _tenants;
 

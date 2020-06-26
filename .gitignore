@@ -3,12 +3,11 @@
 ################################################################################
 
 /.vs
+/SharedFlat/bin
 /SharedFlat/obj
+/SharedFlat.Sample/bin
 /SharedFlat.Sample/obj
-/SharedFlat/bin/Debug
-/SharedFlat.Sample/bin/Debug/netcoreapp2.1
-/SharedFlat.Sample/SharedFlat.Sample.csproj.user
+/SharedFlat.Sample.Abc/bin
 /SharedFlat.Sample.Abc/obj
-/SharedFlat.Sample.Abc/bin/Debug/netcoreapp2.1
-/SharedFlat.Sample/bin/Debug/netcoreapp3.1
-/SharedFlat.Sample.Abc/bin/Debug/netcoreapp3.1
+*.user
+*.suo

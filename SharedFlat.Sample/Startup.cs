@@ -30,16 +30,21 @@ namespace SharedFlat.Sample
                     //.TenantForQueryString()
                     //.TenantForSourceIP()
                     .TenantForHost()
+                    //.StaticTenant("abc.com")
                 .AddTenantDbContextIdentitication()
                     //.Dummy();
                     .FilterByTenant();
-
+            
             services.AddTenantConfiguration<Startup>();
 
-            services.AddDbContext<BlogContext>(options =>
+            services.AddHttpContextAccessor();
+
+            services.AddDbContext<BlogContext>((serviceProvider, options) =>
             {
+                //options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
                 options
-                    .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                    .UseInMemoryDatabase("Blog");
+                    //.UseInternalServiceProvider(serviceProvider);
             });
 
             services
@@ -76,7 +81,7 @@ namespace SharedFlat.Sample
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.UseTenants();
+            app.UseTenants();
 
             if (env.IsDevelopment())
             {

@@ -7,7 +7,7 @@ namespace SharedFlat.Sample
     {
         public void Configure(IConfiguration configuration)
         {
-            configuration["Tenant"] = this.Tenant;
+            configuration[nameof(Tenant)] = this.Tenant;
         }
 
         public void ConfigureServices(IServiceCollection services)

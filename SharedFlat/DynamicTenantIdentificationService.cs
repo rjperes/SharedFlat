@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 
 namespace SharedFlat
 {
-    public sealed class DynamicTenantIdentificationService : ITenantIdentificationService
+    public sealed class DynamicTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
         private readonly Func<HttpContext, string> _currentTenant;
         private readonly Func<IEnumerable<string>> _allTenants;

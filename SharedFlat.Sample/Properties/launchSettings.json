@@ -15,9 +15,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "SharedFlat.Sample": {
+    "SharedFlat.Sample1": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://xyz.net:5000/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
