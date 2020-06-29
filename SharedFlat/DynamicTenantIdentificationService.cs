@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 
@@ -8,27 +7,22 @@ namespace SharedFlat
     public sealed class DynamicTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
         private readonly Func<HttpContext, string> _currentTenant;
-        private readonly Func<IEnumerable<string>> _allTenants;
+        private readonly IEnumerable<string> _allTenants;
 
-        public DynamicTenantIdentificationService(Func<HttpContext, string> currentTenant, Func<IEnumerable<string>> allTenants)
+        public DynamicTenantIdentificationService(Func<HttpContext, string> currentTenant, IEnumerable<string> allTenants)
         {
             if (currentTenant == null)
             {
                 throw new ArgumentNullException(nameof(currentTenant));
             }
 
-            if (allTenants == null)
-            {
-                throw new ArgumentNullException(nameof(allTenants));
-            }
-
             this._currentTenant = currentTenant;
-            this._allTenants = allTenants;
+            this._allTenants = allTenants ?? new List<string>();
         }
 
         public IEnumerable<string> GetAllTenants()
         {
-            return this._allTenants();
+            return this._allTenants;
         }
 
         public string GetCurrentTenant(HttpContext context)

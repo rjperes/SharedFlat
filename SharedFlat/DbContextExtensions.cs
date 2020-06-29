@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharedFlat
+﻿namespace SharedFlat
 {
     public static class DbContextExtensions
     {

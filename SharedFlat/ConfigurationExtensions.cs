@@ -10,5 +10,16 @@ namespace SharedFlat
         {
             return configuration.GetSection(nameof(Tenants)).Get<TenantMapping>();
         }
+
+        public static T GetTenantConfiguration<T>(this IConfiguration configuration, string tenant) where T : new()
+        {
+            return configuration.GetValue<T>($"{nameof(Tenants)}:Configuration:{tenant}");
+        }
+
+        public static T BindTenantConfiguration<T>(this IConfiguration configuration, string tenant, T instance)
+        {
+            configuration.GetSection($"{nameof(Tenants)}:Configuration:{tenant}").Bind(instance);
+            return instance;
+        }
     }
 }

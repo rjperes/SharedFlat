@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +15,7 @@ using System.Runtime.Loader;
 namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
-    {        
+    {
         private static ContainerConfiguration AddFromPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             var assemblyFiles = Directory
@@ -101,7 +102,8 @@ namespace SharedFlat
         public static ITenantIdentification AddTenantIdentification(this IServiceCollection services)
         {
             return new TenantIdentification(services);
-;        }
+            ;
+        }
 
         public static IServiceCollection AddTenantLocations(this IServiceCollection services)
         {
@@ -118,7 +120,7 @@ namespace SharedFlat
         {
             return services
                 .AddHttpContextAccessor()
-                .AddScoped<ITenantsEnumerationService>(sp => sp.GetRequiredService<ITenantService>() as ITenantsEnumerationService)
+                .AddScoped<ITenantsEnumerationService>(sp => sp.GetRequiredService<ITenantService>() as ITenantsEnumerationService ?? throw new InvalidOperationException("Current tenant service does not allow enumerating tenants."))
                 .AddScoped<ITenantService, TenantService>();
         }
 

@@ -26,11 +26,12 @@ namespace SharedFlat.Sample
                 .AddTenantMiddleware()
                 .AddTenantLocations()
                 .AddTenantIdentification()
-                    //.DynamicTenant(x => "abc", () => new [] { "abc", "xyz" })
+                    //.TenantForHeader()
+                    //.DynamicTenant(x => "abc", new [] { "abc", "xyz" })
                     //.TenantForQueryString()
                     //.TenantForSourceIP()
                     .TenantForHost()
-                    //.StaticTenant("abc.com")
+                    //.StaticTenant("abc")
                 .AddTenantDbContextIdentitication()
                     //.Dummy();
                     .FilterByTenant();
@@ -52,6 +53,11 @@ namespace SharedFlat.Sample
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddRouting();
+
+            services.Configure<PerTenantSettings>("abc", options =>
+            {
+                this.Configuration.BindTenantConfiguration("abc", options);
+            });
 
             services.Configure<PerTenantSettings>("abc", options =>
             {

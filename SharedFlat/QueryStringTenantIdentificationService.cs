@@ -8,25 +8,32 @@ namespace SharedFlat
 {
     public sealed class QueryStringTenantIdentificationService : ITenantIdentificationService, ITenantsEnumerationService
     {
-        private readonly TenantMapping _tenants;
-        private readonly string _tenantKey = nameof(TenantService.Tenant);
+        private readonly QueryStringTenantIdentificationOption _options;
 
         public QueryStringTenantIdentificationService(IConfiguration configuration, string tenantKey = nameof(TenantService.Tenant))
         {
-            this._tenants = configuration.GetTenantMapping();
-            this._tenantKey = tenantKey ?? this._tenantKey;
+            var options = new QueryStringTenantIdentificationOption();
+            options.Mapping = configuration.GetTenantMapping();
+            options.Parameter = tenantKey ?? options.Parameter;
+            
+            this._options = options;
+        }
+
+        public QueryStringTenantIdentificationService(QueryStringTenantIdentificationOption options)
+        {
+            this._options = options;
         }
 
         public string GetCurrentTenant(HttpContext context)
         {
-            var tenant = context.Request.Query[this._tenantKey].ToString();
+            var tenant = context.Request.Query[this._options.Parameter].ToString();
 
-            if (string.IsNullOrWhiteSpace(tenant) || !this._tenants.Tenants.Values.Contains(tenant, StringComparer.InvariantCultureIgnoreCase))
+            if (string.IsNullOrWhiteSpace(tenant) || !this._options.Mapping.Tenants.Values.Contains(tenant, StringComparer.InvariantCultureIgnoreCase))
             {
-                return this._tenants.Default;
+                return this._options.Mapping.Default;
             }
 
-            if (this._tenants.Tenants.TryGetValue(tenant, out var mappedTenant))
+            if (this._options.Mapping.Tenants.TryGetValue(tenant, out var mappedTenant))
             {
                 return mappedTenant;
             }
@@ -36,7 +43,7 @@ namespace SharedFlat
 
         public IEnumerable<string> GetAllTenants()
         {
-            return this._tenants.Tenants.Values;
+            return this._options.Mapping.Tenants.Values;
         }
     }
 }
