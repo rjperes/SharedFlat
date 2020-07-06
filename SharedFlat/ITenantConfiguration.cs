@@ -5,8 +5,7 @@ namespace SharedFlat
 {
     public interface ITenantConfiguration
     {
-        void Configure(IConfiguration configuration);
-        void ConfigureServices(IServiceCollection services);
+        void ConfigureServices(IConfiguration configuration, IServiceCollection services);
         string Tenant { get; }
     }
 }

@@ -13,11 +13,7 @@ namespace SharedFlat
 
         public string Tenant => string.Empty;
 
-        public void Configure(IConfiguration configuration)
-        {
-        }
-
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
         }
     }

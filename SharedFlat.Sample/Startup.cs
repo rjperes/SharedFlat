@@ -30,13 +30,16 @@ namespace SharedFlat.Sample
                     //.DynamicTenant(x => "abc", new [] { "abc", "xyz" })
                     //.TenantForQueryString()
                     //.TenantForSourceIP()
-                    .TenantForHost()
+                    .TenantForHost(options =>
+                    {
+                        this.Configuration.BindTenantsMapping(options.Mapping);
+                    })
                     //.StaticTenant("abc")
                 .AddTenantDbContextIdentitication()
                     //.Dummy();
                     .FilterByTenant();
             
-            services.AddTenantConfiguration<Startup>();
+            services.AddTenantConfiguration();
 
             services.AddHttpContextAccessor();
 

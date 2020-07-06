@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Composition.Convention;
 using System.Composition.Hosting;
@@ -16,6 +17,26 @@ namespace SharedFlat
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddTenantService<TService, TImplementation>(this IServiceCollection services, ServiceLifetime lifetime, string tenant)
+        {
+            services.Add(new ServiceDescriptor(typeof(TService), typeof(TImplementation), lifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenantService(this IServiceCollection services, ServiceLifetime lifetime, Type serviceType, Type implementationType, string tenant)
+        {
+            services.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
+            return services;
+        }
+
+        public static IServiceCollection AddTenantService<TService>(this IServiceCollection services, ServiceLifetime lifetime, Func<IServiceProvider, TService> factory, string tenant)
+        {
+            services.Add(new ServiceDescriptor(typeof(TService), (sp) => factory(sp), lifetime));
+            return services;
+        }
+
+
+
         private static ContainerConfiguration AddFromPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             var assemblyFiles = Directory
@@ -58,6 +79,11 @@ namespace SharedFlat
             return services;
         }
 
+        public static IServiceCollection AddTenantConfiguration(this IServiceCollection services)
+        {
+            return services.AddTenantConfiguration(Assembly.GetEntryAssembly());
+        }
+
         public static IServiceCollection AddTenantConfiguration(this IServiceCollection services, Assembly assembly)
         {
             var types = assembly
@@ -65,30 +91,35 @@ namespace SharedFlat
                 .Where(type => typeof(ITenantConfiguration).IsAssignableFrom(type))
                 .Where(type => (type.IsAbstract == false) && (type.IsInterface == false));
 
-            services.AddScoped(typeof(ITenantConfiguration), sp =>
+            if (types.Any())
             {
-                var svc = sp.GetRequiredService<ITenantService>();
-                var configuration = sp.GetRequiredService<IConfiguration>();
-                var tenant = svc.GetCurrentTenant();
-                var instance = types
-                    .Select(type => ActivatorUtilities.CreateInstance(sp, type))
-                    .OfType<ITenantConfiguration>()
-                    .SingleOrDefault(x => x.Tenant == tenant);
-
-                if (instance != null)
+                services.AddScoped(typeof(ITenantConfiguration), sp =>
                 {
-                    instance.Configure(configuration);
-                    instance.ConfigureServices(services);
+                    var svc = sp.GetRequiredService<ITenantService>();
+                    var configuration = sp.GetRequiredService<IConfiguration>();
+                    var tenant = svc.GetCurrentTenant();
+                    var instance = types
+                        .Select(type => ActivatorUtilities.CreateInstance(sp, type))
+                        .OfType<ITenantConfiguration>()
+                        .SingleOrDefault(x => x.Tenant == tenant);
 
-                    sp.GetRequiredService<IHttpContextAccessor>().HttpContext.RequestServices = services.BuildServiceProvider();
-                    return instance;
-                }
-                else
-                {
-                    return DummyTenantServiceProviderConfiguration.Instance;
-                }
+                    if (instance != null)
+                    {
+                        configuration[nameof(TenantService.Tenant)] = tenant;
 
-            });
+                        instance.ConfigureServices(configuration, services);
+
+                        sp.GetRequiredService<IHttpContextAccessor>().HttpContext.RequestServices = services.BuildServiceProvider();
+                        
+                        return instance;
+                    }
+                    else
+                    {
+                        return DummyTenantServiceProviderConfiguration.Instance;
+                    }
+
+                });
+            }
 
             return services;
         }

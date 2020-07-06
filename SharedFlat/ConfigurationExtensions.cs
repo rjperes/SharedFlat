@@ -21,5 +21,11 @@ namespace SharedFlat
             configuration.GetSection($"{nameof(Tenants)}:Configuration:{tenant}").Bind(instance);
             return instance;
         }
+
+        public static TenantMapping BindTenantsMapping(this IConfiguration configuration, TenantMapping mapping)
+        {
+            configuration.GetSection($"{nameof(Tenants)}").Bind(mapping);
+            return mapping;
+        }
     }
 }

@@ -5,12 +5,7 @@ namespace SharedFlat.Sample
 {
     public sealed class xyzTenantServiceProviderConfiguration : ITenantConfiguration
     {
-        public void Configure(IConfiguration configuration)
-        {
-            configuration[nameof(Tenant)] = this.Tenant;
-        }
-
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
             services.AddScoped<Xpto>(sp => new Xpto { Name = this.Tenant });
         }
