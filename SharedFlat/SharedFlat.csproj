@@ -13,7 +13,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Product>SharedFlat</Product>
     <PackageId>SharedFlat</PackageId>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

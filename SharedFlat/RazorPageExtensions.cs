@@ -6,6 +6,12 @@ namespace SharedFlat
 {
     public static class RazorPageExtensions
     {
+        public static string GetTenant(this IRazorPage page)
+        {
+            var service = page.ViewContext.HttpContext.RequestServices.GetService<ITenantService>();
+            return service.GetCurrentTenant();
+        }
+
         public static bool IsTenant(this IRazorPage page, string tenant)
         {
             var service = page.ViewContext.HttpContext.RequestServices.GetService<ITenantService>();
