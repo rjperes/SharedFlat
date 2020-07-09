@@ -23,8 +23,8 @@ namespace SharedFlat.Sample
         {
             services
                 .AddTenantService()
-                .AddTenantMiddleware()
-                .AddTenantLocations()
+                .AddTenantMiddleware()  //not used, can be omitted
+                .AddTenantLocations()   //for Razor views
                 .AddTenantIdentification()
                     //.TenantForHeader()
                     //.DynamicTenant(x => "abc", new [] { "abc", "xyz" })
@@ -90,7 +90,7 @@ namespace SharedFlat.Sample
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseTenants();
+            app.UseTenants();   //not used, can be omitted
 
             if (env.IsDevelopment())
             {

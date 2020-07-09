@@ -93,32 +93,25 @@ namespace SharedFlat
 
             if (types.Any())
             {
-                services.AddScoped(typeof(ITenantConfiguration), sp =>
+                foreach (var type in types)
                 {
-                    var svc = sp.GetRequiredService<ITenantService>();
-                    var configuration = sp.GetRequiredService<IConfiguration>();
-                    var tenant = svc.GetCurrentTenant();
-                    var instance = types
-                        .Select(type => ActivatorUtilities.CreateInstance(sp, type))
-                        .OfType<ITenantConfiguration>()
-                        .SingleOrDefault(x => x.Tenant == tenant);
-
-                    if (instance != null)
+                    services.AddScoped(typeof(ITenantConfiguration), sp =>
                     {
+                        var svc = sp.GetRequiredService<ITenantService>();
+                        var configuration = sp.GetRequiredService<IConfiguration>();
+                        var tenant = svc.GetCurrentTenant();
+                        var instance = ActivatorUtilities.CreateInstance(sp, type) as ITenantConfiguration;
+
                         configuration[nameof(TenantService.Tenant)] = tenant;
 
                         instance.ConfigureServices(configuration, services);
 
                         sp.GetRequiredService<IHttpContextAccessor>().HttpContext.RequestServices = services.BuildServiceProvider();
-                        
-                        return instance;
-                    }
-                    else
-                    {
-                        return DummyTenantServiceProviderConfiguration.Instance;
-                    }
 
-                });
+                        return instance;
+                    });
+
+                }
             }
 
             return services;

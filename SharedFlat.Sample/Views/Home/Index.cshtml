@@ -12,6 +12,11 @@
     This is tenant XYZ!
 </tenant>
 
+@if (this.IsTenant("xpto"))
+{
+    <p>Tenant xpto</p>
+}
+
 @if (this.IsEnabledForTenant("OptionA"))
 {
     <p>Option A is enabled</p>
