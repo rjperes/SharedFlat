@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>Ricardo Peres</Authors>
     <Company>Ricardo Peres</Company>
     <Description>SharedFlat is a multitenancy library for .NET Core/.NET Standard.</Description>
@@ -13,25 +13,21 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Product>SharedFlat</Product>
     <PackageId>SharedFlat</PackageId>
-    <Version>1.1.3</Version>
+    <Version>2.0.0-pre</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="System.Composition" Version="1.4.1" />
-    <PackageReference Include="System.Composition.AttributedModel" Version="1.4.1" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+    <PackageReference Include="System.Composition" Version="8.0.0" />
+    <PackageReference Include="System.Composition.AttributedModel" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.6.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
 </Project>

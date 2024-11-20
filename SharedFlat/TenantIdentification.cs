@@ -2,6 +2,11 @@
 
 namespace SharedFlat
 {
+    public interface ITenantIdentification
+    {
+        IServiceCollection Services { get; }
+    }
+
     internal sealed class TenantIdentification : ITenantIdentification
     {
         public IServiceCollection Services { get; }

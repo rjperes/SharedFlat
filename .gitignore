@@ -9,5 +9,7 @@
 /SharedFlat.Sample/obj
 /SharedFlat.Sample.Abc/bin
 /SharedFlat.Sample.Abc/obj
+/SharedFlat.EntityFrameworkCore/bin
+/SharedFlat.EntityFrameworkCore/obj
 *.user
 *.suo

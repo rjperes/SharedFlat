@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SharedFlat.Sample.Models;
+using SharedFlat.Services;
 using System.Diagnostics;
 using System.Linq;
 

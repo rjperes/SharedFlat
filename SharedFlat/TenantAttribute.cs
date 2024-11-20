@@ -8,7 +8,7 @@ namespace SharedFlat
     {
         public TenantAttribute(string tenant)
         {
-            this.Tenant = tenant;
+            this.Tenant = tenant ?? string.Empty;
         }
 
         public string Tenant { get; }

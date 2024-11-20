@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using SharedFlat.EntityFrameworkCore;
 
 namespace SharedFlat.Sample.Models
 {

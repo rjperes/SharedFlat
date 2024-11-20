@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-  </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="ECHO Copying $(OutDir)\$(ProjectName).dll&#xD;&#xA;ECHO To $(SolutionDir)\SharedFlat.Sample\$(OutDir)&#xD;&#xA;COPY $(OutDir)\$(ProjectName).dll $(SolutionDir)\SharedFlat.Sample\$(OutDir)" />
   </Target>
 

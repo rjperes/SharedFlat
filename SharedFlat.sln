@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30204.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFlat", "SharedFlat\SharedFlat.csproj", "{203F7360-5EE4-4F99-91D8-BB7AD8B2CF5F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFlat.Sample.Abc", "SharedFlat.Sample.Abc\SharedFlat.Sample.Abc.csproj", "{B7412100-CE5D-4C28-8F81-CC0E609F1739}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFlat.Sample", "SharedFlat.Sample\SharedFlat.Sample.csproj", "{0D4E2362-7357-40B5-8919-4811A78E786D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFlat.EntityFrameworkCore", "SharedFlat.EntityFrameworkCore\SharedFlat.EntityFrameworkCore.csproj", "{2477FC6A-ED26-4090-A951-72C0C3C56A8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{0D4E2362-7357-40B5-8919-4811A78E786D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D4E2362-7357-40B5-8919-4811A78E786D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D4E2362-7357-40B5-8919-4811A78E786D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2477FC6A-ED26-4090-A951-72C0C3C56A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2477FC6A-ED26-4090-A951-72C0C3C56A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2477FC6A-ED26-4090-A951-72C0C3C56A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2477FC6A-ED26-4090-A951-72C0C3C56A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

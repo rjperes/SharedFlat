@@ -4,7 +4,7 @@ using System;
 
 namespace SharedFlat
 {
-    public sealed class TenantStartupFilter : IStartupFilter
+    internal sealed class TenantStartupFilter : IStartupFilter
     {
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
